@@ -53,23 +53,38 @@ public class GameManager : MonoBehaviour {
     }
 
     private void BuildGridTiles () {
-        screenSize = Camera.main.orthographicSize;
         isPanoramic = Mathf.Min(Screen.width, Screen.height) == Screen.height;
 
-        float tileScale = isPanoramic ? screenSize / width : screenSize / height;
-        tileScale -= 0.05f;
+        float screenHeight = Camera.main.orthographicSize;
+        float screenWidth = ((float) Screen.width / Screen.height) * screenHeight;
+
+        float tileScale = 1;
+        if (isPanoramic) {
+            tileScale = (screenHeight / height) * 1.5f;
+            Debug.Log(screenHeight + "/" + height);
+        } else {
+            tileScale = (screenWidth / width) * 1.5f;
+            Debug.Log(screenWidth + "/" + width);
+        }
+        //tileScale -= 0.05f;
+
+        Debug.Log(tileScale);
 
         for (int c = 0; c < width; c++) {
             for (int r = 0; r < height; r++) {
                 Vector3 scale = new Vector3(tileScale, 0.2f, tileScale);
 
-                float x = width % 2 == 0 ? (tileScale * c) - (tileScale / 2) * 3 : (tileScale * c) - tileScale;
-                float y = height % 2 == 0 ? (tileScale * r) - (tileScale / 2) * 3 : (tileScale * r) - tileScale;
+                float x = width % 2 == 0 ? (tileScale * c) - (tileScale / 2) * height : (tileScale * c) - tileScale;
+                float y = height % 2 == 0 ? (tileScale * r) - (tileScale / 2) * width : (tileScale * r) - tileScale;
 
-                Vector3 pos = new Vector3(x, 0f, y) * tileScale;
+                Vector3 pos = new Vector3(x, 0f, y) * 1.1f;
 
                 GameObject o = Instantiate(tilePrefab, pos, Quaternion.identity, blocksHolder);
                 o.transform.localScale = scale;
+
+                o.GetComponent<BlockTile>().SetValues(dataGrid[c, r]);
+                //bt.number = dataGrid[c, r];
+
                 blocks.Add(o);
             }
         }
