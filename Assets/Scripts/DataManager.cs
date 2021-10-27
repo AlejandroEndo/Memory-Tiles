@@ -17,9 +17,14 @@ public static class DataManager {
         File.WriteAllText(dirName + fileName, json);
     }
 
-    public static void LoadGridData () {
-        var jsonTextFile = Resources.Load<TextAsset>("blocks_data");
+    public static Blocks LoadGridData () {
+        TextAsset jsonTextFile = Resources.Load<TextAsset>("blocks_data");
+
+        Blocks blocks = JsonUtility.FromJson<Blocks>(jsonTextFile.ToString());
+
         Debug.Log(jsonTextFile);
+
+        return blocks;
     }
     //public static SaveFile Load () {
     //    string fullPath = dirName + fileName;
