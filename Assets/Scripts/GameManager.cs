@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour {
     public int height = 1;
 
     public GameObject tilePrefab;
+    public BoxCollider clickDisabler;
     private Transform blocksHolder;
 
     private void Start () {
         dataBlocks = DataManager.LoadGridData();
         blocksHolder = GameObject.FindGameObjectWithTag("BlockHolder").transform;
+
+        clickDisabler.enabled = false;
 
         SetGridSize();
         SetGridValues();
@@ -32,6 +35,10 @@ public class GameManager : MonoBehaviour {
         // Save Data
         if (Input.GetKeyDown(KeyCode.Space)) {
             DataManager.SaveResult(sf);
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            CheckSelectedTiles();
         }
     }
 
@@ -58,15 +65,13 @@ public class GameManager : MonoBehaviour {
         float screenHeight = Camera.main.orthographicSize;
         float screenWidth = ((float) Screen.width / Screen.height) * screenHeight;
 
-        float tileScale = 1;
-        if (isPanoramic) {
+        float tileScale;
+
+        if (isPanoramic)
             tileScale = (screenHeight / height) * 1.5f;
-            Debug.Log(screenHeight + "/" + height);
-        } else {
+        else
             tileScale = (screenWidth / width) * 1.5f;
-            Debug.Log(screenWidth + "/" + width);
-        }
-        //tileScale -= 0.05f;
+
 
         Debug.Log(tileScale);
 
@@ -79,14 +84,42 @@ public class GameManager : MonoBehaviour {
 
                 Vector3 pos = new Vector3(x, 0f, y) * 1.1f;
 
-                GameObject o = Instantiate(tilePrefab, pos, Quaternion.identity, blocksHolder);
+                GameObject o = Instantiate(tilePrefab, pos, Quaternion.Euler(0, 0, 180), blocksHolder);
                 o.transform.localScale = scale;
 
-                o.GetComponent<BlockTile>().SetValues(dataGrid[c, r]);
-                //bt.number = dataGrid[c, r];
+                o.GetComponent<BlockTile>().InitBlock(c, r, dataGrid[c, r]);
 
                 blocks.Add(o);
             }
         }
+    }
+
+    private void CheckSelectedTiles () {
+        List<int> selectedTiles = new List<int>();
+        for (int i = 0; i < blocks.Count; i++) {
+            BlockTile bt = blocks[i].GetComponent<BlockTile>();
+            if (bt.state == 1) selectedTiles.Add(i);
+        }
+        if (selectedTiles.Count == 2) {
+            clickDisabler.enabled = true;
+            StartCoroutine(ValidateSelectedTiles(selectedTiles));
+        }
+    }
+
+    IEnumerator ValidateSelectedTiles (List<int> tiles) {
+        BlockTile bt1 = blocks[tiles[0]].GetComponent<BlockTile>();
+        BlockTile bt2 = blocks[tiles[1]].GetComponent<BlockTile>();
+
+        yield return new WaitForSeconds(1.5f);
+
+        if (bt1.number == bt2.number) {
+            bt2.MatchFinded();
+            bt1.MatchFinded();
+        } else {
+            bt1.StartCoroutine("HideValue");
+            bt2.StartCoroutine("HideValue");
+        }
+        clickDisabler.enabled = false;
+        yield return null;
     }
 }
