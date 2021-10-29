@@ -20,9 +20,12 @@ public class GameManager : MonoBehaviour {
     public BoxCollider clickDisabler;
     private Transform blocksHolder;
 
+
     private void Start () {
         dataBlocks = DataManager.LoadGridData();
+
         blocksHolder = GameObject.FindGameObjectWithTag("BlockHolder").transform;
+
 
         clickDisabler.enabled = false;
 
@@ -98,7 +101,7 @@ public class GameManager : MonoBehaviour {
         List<int> selectedTiles = new List<int>();
         for (int i = 0; i < blocks.Count; i++) {
             BlockTile bt = blocks[i].GetComponent<BlockTile>();
-            if (bt.state == 1) selectedTiles.Add(i);
+            if (bt.state == BlockState.SHOW) selectedTiles.Add(i);
         }
         if (selectedTiles.Count == 2) {
             clickDisabler.enabled = true;
@@ -106,11 +109,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void HideTiles () {
+        for (int i = 0; i < blocks.Count; i++) {
+            BlockTile bt = blocks[i].GetComponent<BlockTile>();
+            if (bt.number == 1) {
+                bt.state = BlockState.HIDE;
+                bt.StartCoroutine("HideValue");
+            }
+        }
+    }
+
     IEnumerator ValidateSelectedTiles (List<int> tiles) {
         BlockTile bt1 = blocks[tiles[0]].GetComponent<BlockTile>();
         BlockTile bt2 = blocks[tiles[1]].GetComponent<BlockTile>();
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
 
         if (bt1.number == bt2.number) {
             bt2.MatchFinded();
@@ -119,6 +132,7 @@ public class GameManager : MonoBehaviour {
             bt1.StartCoroutine("HideValue");
             bt2.StartCoroutine("HideValue");
         }
+        //yield return new WaitForSeconds(1.5f);
         clickDisabler.enabled = false;
         yield return null;
     }

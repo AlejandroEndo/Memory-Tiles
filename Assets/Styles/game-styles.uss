@@ -1,0 +1,7 @@
+.game-text {
+    font-size: 50px;
+    color: rgb(242, 211, 53);
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+}

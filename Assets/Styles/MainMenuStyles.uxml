@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="styles.uss" />
+    <ui:VisualElement name="background" style="flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="main-panel" style="height: 50%; width: 67%; -unity-text-outline-color: rgb(217, 217, 217); background-color: rgb(217, 217, 217); border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; position: relative; align-items: center; justify-content: center; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
+            <ui:Label text="MEMORY TYLES" display-tooltip-when-elided="true" name="title" style="position: relative; top: auto; color: rgb(13, 13, 13); font-size: 50%; white-space: nowrap; -unity-text-align: upper-center; -unity-font-style: bold;" />
+            <ui:Button text="Start" display-tooltip-when-elided="true" name="start-button" class="button-style" style="width: 50%; height: auto; font-size: 36%;" />
+            <ui:Label text="Last Play:" display-tooltip-when-elided="true" name="last-play" style="color: rgb(13, 13, 13); -unity-text-align: upper-center; font-size: 20%;" />
+            <ui:Label text="Time: 00:00 | Clicks: 99" display-tooltip-when-elided="true" name="score-label" style="align-items: center; justify-content: center; -unity-text-align: upper-center; font-size: 25%; color: rgb(13, 13, 13);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Label text="Powered By Alternova" display-tooltip-when-elided="true" name="by" style="position: absolute; top: auto; color: rgb(242, 211, 53); font-size: 10px; white-space: nowrap; -unity-text-align: upper-right; bottom: 1%; right: 1%;" />
+</ui:UXML>

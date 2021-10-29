@@ -1,0 +1,54 @@
+.button-style {
+    width: 50%;
+    color: rgb(13, 13, 13);
+    background-color: rgb(242, 211, 53);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.button-style:hover {
+    width: 50%;
+    color: rgb(13, 13, 13);
+    background-color: rgb(140, 134, 42);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.button-style:active {
+    width: 50%;
+    color: rgb(13, 13, 13);
+    background-color: rgb(242, 229, 48);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    -unity-font-style: bold;
+}

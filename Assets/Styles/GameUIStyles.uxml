@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="game-styles.uss" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label text="00s" display-tooltip-when-elided="true" name="timer" class="game-text" />
+        <ui:Label text="Clicks: 20" display-tooltip-when-elided="true" name="click-count" class="game-text" style="left: auto; right: 2%;" />
+    </ui:VisualElement>
+</ui:UXML>

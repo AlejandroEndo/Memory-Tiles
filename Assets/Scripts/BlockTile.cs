@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public enum BlockState {
+    HIDE,
+    SHOW,
+    MATCHED
+}
+
 public class BlockTile : MonoBehaviour {
 
     public int number;
@@ -12,11 +18,9 @@ public class BlockTile : MonoBehaviour {
 
     private float rotationSpeed = 0.025f;
 
-    public int state;
+    public BlockState state;
 
     private TextMeshProUGUI tmp;
-
-    public bool onAnimation = false;
 
     [SerializeField]
     private Material idleMaterial;
@@ -27,10 +31,12 @@ public class BlockTile : MonoBehaviour {
 
     private MeshRenderer meshRenderer;
     private BoxCollider tileCollider;
+    private InGameUIController uiController;
 
     void Start () {
         meshRenderer = GetComponent<MeshRenderer>();
         tileCollider = GetComponent<BoxCollider>();
+        uiController = GameObject.FindGameObjectWithTag("UIController").GetComponent<InGameUIController>();
     }
 
     void Update () {
@@ -41,7 +47,7 @@ public class BlockTile : MonoBehaviour {
         number = value;
         c = _c;
         r = _r;
-        state = 0; // 0-> Hidden, 1-> Selected, 2-> Match finded
+        state = BlockState.HIDE;
 
         tmp = tmpObject.GetComponent<TextMeshProUGUI>();
 
@@ -49,30 +55,34 @@ public class BlockTile : MonoBehaviour {
     }
 
     private void OnMouseEnter () {
-        if (state != 2)
+        if (state != BlockState.MATCHED)
             meshRenderer.material = overMaterial;
     }
 
     private void OnMouseExit () {
-        if (state != 2)
+        if (state != BlockState.MATCHED)
             meshRenderer.material = idleMaterial;
     }
 
     private void OnMouseDown () {
-        if (state == 0)
+        if (state == BlockState.HIDE) {
             StartCoroutine("ShowValue");
+            uiController.OnClickUpdated();
+        }
     }
 
     public void MatchFinded () {
-        state = 2;
+        state = BlockState.MATCHED;
         tileCollider.enabled = false;
         meshRenderer.material = matchMaterial;
     }
 
     IEnumerator ShowValue () {
         tileCollider.enabled = false;
-        state = 1;
-        onAnimation = true;
+        state = BlockState.SHOW;
+
+        //transform.rotation = Quaternion.Euler(0, 0, 180);
+
         while (transform.localEulerAngles.z > 0) {
             float dif = transform.localEulerAngles.z;
             Quaternion newRotation;
@@ -80,7 +90,6 @@ public class BlockTile : MonoBehaviour {
             if (dif < 5f) {
                 tileCollider.enabled = true;
                 newRotation = Quaternion.identity;
-                onAnimation = false;
             } else {
                 dif *= rotationSpeed;
                 newRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z - dif);
@@ -93,8 +102,10 @@ public class BlockTile : MonoBehaviour {
 
     IEnumerator HideValue () {
         tileCollider.enabled = false;
-        state = 0;
-        onAnimation = true;
+        state = BlockState.HIDE;
+
+        //transform.rotation = Quaternion.identity;
+
         while (transform.eulerAngles.z < 180) {
             float dif = 180 - transform.eulerAngles.z;
             Quaternion newRotation;
@@ -102,7 +113,6 @@ public class BlockTile : MonoBehaviour {
             if (dif < 5f) {
                 tileCollider.enabled = true;
                 newRotation = Quaternion.Euler(0, 0, 180);
-                onAnimation = false;
             } else {
                 dif *= rotationSpeed;
                 newRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + dif);

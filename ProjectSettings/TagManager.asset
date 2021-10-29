@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BlockHolder
   - GameManager
+  - UIController
   layers:
   - Default
   - TransparentFX

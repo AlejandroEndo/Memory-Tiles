@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Blocks {
+    public Block[] blocks;
+}
 
 [System.Serializable]
 public class Block {
@@ -19,9 +23,4 @@ public class SaveFile {
 public class Results {
     public int total_clicks;
     public float total_time;
-}
-
-[System.Serializable]
-public class Blocks {
-    public Block[] blocks;
 }

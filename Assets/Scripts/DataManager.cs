@@ -5,8 +5,8 @@ using System.IO;
 
 public static class DataManager {
 
-    public static string dirName = "Assets/Results/";
-    public static string fileName = "result.json";
+    public static string dirName = "Assets/Resources/";
+    public static string fileName = "results.json";
 
     public static void SaveResult (SaveFile file) {
         if (!Directory.Exists(dirName)) {
