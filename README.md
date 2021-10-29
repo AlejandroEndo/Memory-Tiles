@@ -8,6 +8,6 @@ Memory tiles game demo using JSON file
 - [x] Click to Rotate tiles in pairs
 - [x] UI Score elements
 - [x] Make UI Menu
-- [ ] Fix bugs
+- [x] Fix bugs
 - [ ] Add VFX
 - [ ] Add SFX
