@@ -6,7 +6,8 @@ Memory tiles game demo using JSON file
 - [x] Create Grid from Json Data
 - [x] Asign Json Data for each tile
 - [x] Click to Rotate tiles in pairs
-- [ ] UI Score elements
-- [ ] Make UI
+- [x] UI Score elements
+- [x] Make UI Menu
+- [ ] Fix bugs
 - [ ] Add VFX
 - [ ] Add SFX
