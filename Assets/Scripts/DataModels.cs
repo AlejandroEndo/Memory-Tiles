@@ -22,5 +22,5 @@ public class SaveFile {
 [System.Serializable]
 public class Results {
     public int total_clicks;
-    public float total_time;
+    public int total_time;
 }

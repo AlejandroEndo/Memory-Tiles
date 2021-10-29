@@ -1,7 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="game-styles.uss" />
-    <ui:VisualElement style="flex-grow: 1;">
-        <ui:Label text="00s" display-tooltip-when-elided="true" name="timer" class="game-text" />
-        <ui:Label text="Clicks: 20" display-tooltip-when-elided="true" name="click-count" class="game-text" style="left: auto; right: 2%;" />
+    <ui:VisualElement name="in-game-ui" style="flex-grow: 1;">
+        <ui:Label text="00s" display-tooltip-when-elided="true" name="timer" class="game-text" style="font-size: 50%;" />
+        <ui:Label text="Clicks: 20" display-tooltip-when-elided="true" name="click-count" class="game-text" style="left: auto; right: 2%; font-size: 50%;" />
+        <ui:VisualElement name="game-over-panel" style="position: relative; flex-grow: 1; align-items: center; justify-content: center;">
+            <ui:VisualElement name="container" style="background-color: rgb(217, 217, 217); width: 80%; height: 50%; align-items: center; justify-content: space-between; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+                <ui:VisualElement />
+                <ui:Label text="Game Over&#10;Score:" display-tooltip-when-elided="true" name="title-label" style="width: auto; height: auto; color: rgb(13, 13, 13); -unity-font-style: bold; -unity-text-align: upper-center;" />
+                <ui:Label text="Time: 00s | Clicks: 00" display-tooltip-when-elided="true" name="score-label" style="color: rgb(13, 13, 13); -unity-font-style: normal; font-size: 29px; width: auto; height: auto; -unity-text-align: upper-center;" />
+                <ui:Button text="Replay" display-tooltip-when-elided="true" name="replay-button" class="in-game-button" />
+                <ui:VisualElement />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

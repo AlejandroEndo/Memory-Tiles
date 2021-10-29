@@ -62,74 +62,67 @@ public class BlockTile : MonoBehaviour {
 
     private void OnMouseDown () {
         if (state == BlockState.HIDE) {
-            StartShowAnimation();
             uiController.OnClickUpdated();
+            StartShowAnimation();
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().CheckSelectedTiles();
         }
     }
 
     public void MatchFinded () {
         state = BlockState.MATCHED;
-        //tileCollider.enabled = false;
+        tileCollider.enabled = false;
         meshRenderer.material = matchMaterial;
         transform.rotation = Quaternion.identity;
     }
 
     public void StartShowAnimation () {
-        //tileCollider.enabled = false;
+        tileCollider.enabled = false;
         state = BlockState.SHOW;
         transform.rotation = Quaternion.Euler(0, 0, 180);
         StartCoroutine("ShowValue");
     }
 
     public void StartHideAnimation () {
-        //tileCollider.enabled = false;
+        tileCollider.enabled = false;
         state = BlockState.HIDE;
         transform.rotation = Quaternion.identity;
         StartCoroutine("HideValue");
     }
 
     IEnumerator ShowValue () {
-        //tileCollider.enabled = false;
-        //state = BlockState.SHOW;
-
-        //transform.rotation = Quaternion.Euler(0, 0, 180);
-
         while (transform.localEulerAngles.z > 0) {
             float dif = transform.localEulerAngles.z;
             Quaternion newRotation;
 
             if (dif < 5f) {
-                //tileCollider.enabled = true;
                 newRotation = Quaternion.identity;
+                transform.rotation = newRotation;
+                tileCollider.enabled = true;
             } else {
                 dif *= rotationSpeed;
                 newRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z - dif);
-            }
             transform.rotation = newRotation;
+            }
             yield return null;
         }
     }
 
 
     IEnumerator HideValue () {
-        //tileCollider.enabled = false;
-        //state = BlockState.HIDE;
-
-        //transform.rotation = Quaternion.identity;
-
         while (transform.eulerAngles.z < 180) {
             float dif = 180 - transform.eulerAngles.z;
             Quaternion newRotation;
 
             if (dif < 5f) {
-                //tileCollider.enabled = true;
                 newRotation = Quaternion.Euler(0, 0, 180);
+                transform.rotation = newRotation;
+                tileCollider.enabled = true;
             } else {
                 dif *= rotationSpeed;
                 newRotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + dif);
+            transform.rotation = newRotation;
             }
 
-            transform.rotation = newRotation;
             yield return null;
         }
     }
