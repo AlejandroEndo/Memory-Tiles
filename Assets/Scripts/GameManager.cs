@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
     public BoxCollider clickDisabler;
     private Transform blocksHolder;
 
+    private bool selectionEnabled = true;
+
 
     private void Start () {
         dataBlocks = DataManager.LoadGridData();
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour {
             DataManager.SaveResult(sf);
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && selectionEnabled) {
             CheckSelectedTiles();
         }
     }
@@ -76,8 +78,6 @@ public class GameManager : MonoBehaviour {
             tileScale = (screenWidth / width) * 1.5f;
 
 
-        Debug.Log(tileScale);
-
         for (int c = 0; c < width; c++) {
             for (int r = 0; r < height; r++) {
                 Vector3 scale = new Vector3(tileScale, 0.2f, tileScale);
@@ -103,8 +103,10 @@ public class GameManager : MonoBehaviour {
             BlockTile bt = blocks[i].GetComponent<BlockTile>();
             if (bt.state == BlockState.SHOW) selectedTiles.Add(i);
         }
+        Debug.Log("Kill me");
         if (selectedTiles.Count == 2) {
-            clickDisabler.enabled = true;
+            SwitchBlocksCollider(false);
+            //clickDisabler.enabled = true;
             StartCoroutine(ValidateSelectedTiles(selectedTiles));
         }
     }
@@ -112,10 +114,19 @@ public class GameManager : MonoBehaviour {
     private void HideTiles () {
         for (int i = 0; i < blocks.Count; i++) {
             BlockTile bt = blocks[i].GetComponent<BlockTile>();
-            if (bt.number == 1) {
-                bt.state = BlockState.HIDE;
-                bt.StartCoroutine("HideValue");
+            if (bt.state == BlockState.SHOW) {
+                //bt.state = BlockState.HIDE;
+                bt.StartHideAnimation();
             }
+        }
+    }
+
+    private void SwitchBlocksCollider (bool value) {
+        Debug.Log("Funcion!" + value);
+        selectionEnabled = value;
+        for (int i = 0; i < blocks.Count; i++) {
+            BlockTile bt = blocks[i].GetComponent<BlockTile>();
+            bt.tileCollider.enabled = value;
         }
     }
 
@@ -123,17 +134,19 @@ public class GameManager : MonoBehaviour {
         BlockTile bt1 = blocks[tiles[0]].GetComponent<BlockTile>();
         BlockTile bt2 = blocks[tiles[1]].GetComponent<BlockTile>();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
         if (bt1.number == bt2.number) {
             bt2.MatchFinded();
             bt1.MatchFinded();
         } else {
-            bt1.StartCoroutine("HideValue");
-            bt2.StartCoroutine("HideValue");
+            //HideTiles();
+            bt1.StartHideAnimation();
+            bt2.StartHideAnimation();
         }
         //yield return new WaitForSeconds(1.5f);
-        clickDisabler.enabled = false;
+        SwitchBlocksCollider(true);
+        //clickDisabler.enabled = false;
         yield return null;
     }
 }
