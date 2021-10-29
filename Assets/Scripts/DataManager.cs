@@ -5,16 +5,28 @@ using System.IO;
 
 public static class DataManager {
 
-    public static string dirName = "Assets/Resources/";
+    public static string dirName = Application.dataPath + "/Data/";
     public static string fileName = "results.json";
 
-    public static void SaveResult (SaveFile file) {
+
+    public static void SaveResult (int time, int clicks) {
         if (!Directory.Exists(dirName)) {
             Directory.CreateDirectory(dirName);
         }
 
-        string json = JsonUtility.ToJson(file);
-        File.WriteAllText(dirName + fileName, json);
+        TextAsset jsonTextFile = Resources.Load<TextAsset>("results");
+        SaveFile saveFile = JsonUtility.FromJson<SaveFile>(jsonTextFile.ToString());
+
+        saveFile.results.total_clicks = clicks;
+        saveFile.results.total_time = time;
+
+        string json = JsonUtility.ToJson(saveFile);
+        Debug.Log(dirName);
+        File.WriteAllText(dirName+fileName, json);
+    }
+
+    public static string LoadResult() {
+        return File.ReadAllText(dirName+fileName);
     }
 
     public static Blocks LoadGridData () {
@@ -22,23 +34,6 @@ public static class DataManager {
 
         Blocks blocks = JsonUtility.FromJson<Blocks>(jsonTextFile.ToString());
 
-        Debug.Log(jsonTextFile);
-
         return blocks;
     }
-
-    //public static SaveFile Load () {
-    //    string fullPath = dirName + fileName;
-    //    SaveFile sf = new SaveFile();
-
-    //    if (File.Exists(fullPath)) {
-    //        Debug.Log(fullPath);
-    //        string json = File.ReadAllText(fullPath);
-    //        sf = JsonUtility.FromJson<SaveFile>(json);
-    //    } else {
-    //        Debug.Log("Safe File does not exist.");
-    //    }
-
-    //    return sf;
-    //}
 }

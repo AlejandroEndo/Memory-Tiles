@@ -6,9 +6,9 @@
         <ui:VisualElement name="game-over-panel" style="position: relative; flex-grow: 1; align-items: center; justify-content: center;">
             <ui:VisualElement name="container" style="background-color: rgb(217, 217, 217); width: 80%; height: 50%; align-items: center; justify-content: space-between; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
                 <ui:VisualElement />
-                <ui:Label text="Game Over&#10;Score:" display-tooltip-when-elided="true" name="title-label" style="width: auto; height: auto; color: rgb(13, 13, 13); -unity-font-style: bold; -unity-text-align: upper-center;" />
-                <ui:Label text="Time: 00s | Clicks: 00" display-tooltip-when-elided="true" name="score-label" style="color: rgb(13, 13, 13); -unity-font-style: normal; font-size: 29px; width: auto; height: auto; -unity-text-align: upper-center;" />
-                <ui:Button text="Replay" display-tooltip-when-elided="true" name="replay-button" class="in-game-button" />
+                <ui:Label text="Game Over&#10;Score:" display-tooltip-when-elided="true" name="title-label" style="width: auto; height: auto; color: rgb(13, 13, 13); -unity-font-style: bold; -unity-text-align: upper-center; font-size: 50%;" />
+                <ui:Label text="Time: 00s | Clicks: 00" display-tooltip-when-elided="true" name="score-label" style="color: rgb(13, 13, 13); -unity-font-style: normal; font-size: 50%; width: auto; height: auto; -unity-text-align: upper-center;" />
+                <ui:Button text="Replay" display-tooltip-when-elided="true" name="replay-button" class="in-game-button" style="width: 60%; height: 10%; font-size: 40%;" />
                 <ui:VisualElement />
             </ui:VisualElement>
         </ui:VisualElement>

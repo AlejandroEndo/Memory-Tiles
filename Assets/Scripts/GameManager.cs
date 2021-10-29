@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public SaveFile sf;
+    [Header("Data")]
     public Blocks dataBlocks;
-
-    public float screenSize;
-    public bool isPanoramic;
-
-    public List<GameObject> blocks;
     public int[,] dataGrid;
+    public List<GameObject> blocks;
 
+    [Header("Size")]
+    public bool isPanoramic;
     public int width = 1;
     public int height = 1;
 
-    public GameObject tilePrefab;
+    [Header("Block tiles")]
     private Transform blocksHolder;
+    public GameObject tilePrefab;
 
+    [Header("GamePlay")]
     public int matches = 0;
-
     private bool gameOver = false;
-
     private InGameUIController uIController;
 
+    #region Build Blocks Grid
     private void Start () {
         dataBlocks = DataManager.LoadGridData();
 
@@ -34,17 +33,6 @@ public class GameManager : MonoBehaviour {
         SetGridSize();
         SetGridValues();
         BuildGridTiles();
-    }
-
-    private void Update () {
-        if (gameOver) return;
-
-        if(matches >= dataBlocks.blocks.Length / 2) {
-            SwitchBlocksCollider(false);
-            gameOver = true;
-            uIController.GameOver();
-            Debug.Log("GAME OVER!!");
-        }
     }
 
     private void SetGridSize () {
@@ -94,6 +82,18 @@ public class GameManager : MonoBehaviour {
 
                 blocks.Add(o);
             }
+        }
+    }
+    #endregion
+
+    private void Update() {
+        if (gameOver) return;
+
+        if (matches >= dataBlocks.blocks.Length / 2) {
+            SwitchBlocksCollider(false);
+            gameOver = true;
+            uIController.GameOver();
+            Debug.Log("GAME OVER!!");
         }
     }
 

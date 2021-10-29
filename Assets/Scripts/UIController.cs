@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class UIController : MonoBehaviour {
 
@@ -25,10 +25,15 @@ public class UIController : MonoBehaviour {
     }
 
     private string LoadScore () {
-        TextAsset jsonResultsFile = Resources.Load<TextAsset>("results");
+        try {
+            string jsonResultsFile = DataManager.LoadResult(); //Resources.Load<TextAsset>("results");
 
-        SaveFile saveFile = JsonUtility.FromJson<SaveFile>(jsonResultsFile.ToString());
+            SaveFile saveFile = JsonUtility.FromJson<SaveFile>(jsonResultsFile);
 
-        return "Time: " + saveFile.results.total_time + "s | Clicks: " + saveFile.results.total_clicks;
+            return "Time: " + saveFile.results.total_time + "s | Clicks: " + saveFile.results.total_clicks;
+        } catch {
+            return "Time: 0s | Clicks: 0";
+        }
+
     }
 }

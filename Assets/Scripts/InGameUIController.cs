@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class InGameUIController : MonoBehaviour {
 
+    [Header("UI GamePlay")]
     public Label timerLabel;
     public Label clickLabel;
 
+    [Header("UI GameOver")]
     public VisualElement gameOverPanel;
     public Label gameOverScoreLabel;
     public Button replayButton;
@@ -50,21 +52,13 @@ public class InGameUIController : MonoBehaviour {
         clickLabel.text = "Clicks: " + clickCount;
     }
 
+    #region GameOver
     public void GameOver() {
         gameOver = true;
-        //StopCoroutine("GameTimer");
 
-        TextAsset jsonTextFile = Resources.Load<TextAsset>("results");
-        SaveFile saveFile = JsonUtility.FromJson<SaveFile>(jsonTextFile.ToString());
-        saveFile.results.total_clicks = clickCount;
-        saveFile.results.total_time = time;
-
-        Debug.Log(saveFile);
-
-        DataManager.SaveResult(saveFile);
+        DataManager.SaveResult(time, clickCount);
 
         gameOverScoreLabel.text = "Time: " + time + "s | Clicks: " + clickCount;
-
         gameOverPanel.style.display = DisplayStyle.Flex;
     }
 
@@ -75,4 +69,5 @@ public class InGameUIController : MonoBehaviour {
             timerLabel.text = time + "s";
         }
     }
+    #endregion
 }
